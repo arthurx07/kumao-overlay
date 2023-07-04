@@ -1,0 +1,27 @@
+diff --git a/dmenu_websearch.sh b/dmenu_websearch.sh
+index 382f019..20c423e 100644
+--- a/dmenu_websearch
++++ b/dmenu_websearch
+@@ -9,9 +9,9 @@
+ # A  browser-independent address  bar  with bookmark  support. When  the
+ # cursor is on a web browser it acts as the address bar of that browser.
+
+-browser='firefox --new-window'
+-engine='https://duckduckgo.com/?q=%s'
+-bookmarks="$HOME/.bookmarks"
++browser='librewolf'
++engine='https://searx.be/search?q=%s'
++bookmarks="${XDG_CONFIG_HOME}/.bookmarks"
+
+ gotourl() {
+        if [ "$nbrowser" = surf ]
+
+@@ -46,6 +46,7 @@
+        case "$class" in
+                Firefox) nbrowser='firefox' ;;
+                #Firefox) shortcut='ctrl+l' ;; # alternative method, uses xdotool
++               librewolf) nbrowser='librewolf' ;;
+                IceCat) nbrowser='icecat' ;;
+                Chromium) nbrowser='chromium' ;;
+                Chrome) nbrowser='chrome' ;;
+

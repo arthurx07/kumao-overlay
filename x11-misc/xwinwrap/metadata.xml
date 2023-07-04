@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>arthurx07@github.com</email>
+		<name>kumao</name>
+	</maintainer>
+	<upstream>
+		<remote-id type="github">mmhobi7/xwinwrap</remote-id>
+	</upstream>
+</pkgmetadata>

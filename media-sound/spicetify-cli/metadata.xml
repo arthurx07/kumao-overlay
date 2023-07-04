@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>arthurx07@github.com</email>
+		<name>kumao</name>
+	</maintainer>
+	<upstream>
+		<remote-id type="github">spicetify/spicetify-cli</remote-id>
+		<remote-id type="gitlab">api/v4/projects/37881342/packages/generic/spicetify-cli/2.20.3/spicetify-cli-2.20.3-deps.tar.xz</remote-id>
+	</upstream>
+</pkgmetadata>
