@@ -1,0 +1,12 @@
+BDEPEND=>=dev-vcs/git-1.8.2.1[curl]
+DEFINED_PHASES=compile install unpack
+DEPEND=sys-libs/ncurses
+DESCRIPTION=ncurses countdown timer based on xorg62's tty-clock
+EAPI=8
+HOMEPAGE=https://github.com/mbarbar/ttytimer
+INHERIT=git-r3
+PROPERTIES=live
+RDEPEND=sys-libs/ncurses
+SLOT=0
+_eclasses_=git-r3	27e13c09a4c7e4c78ac812f74727e676
+_md5_=36c928a061f25a4eb5dc36c5a3933f4f

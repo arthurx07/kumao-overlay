@@ -1,0 +1,12 @@
+BDEPEND=>=dev-vcs/git-1.8.2.1[curl]
+DEFINED_PHASES=install unpack
+DEPEND=media-sound/spicetify-cli
+DESCRIPTION=Spicetify custom app which shows your top artists, tracks, genres.
+EAPI=8
+HOMEPAGE=https://github.com/harbassan/spicetify-stats
+INHERIT=git-r3
+PROPERTIES=live
+RDEPEND=media-sound/spicetify-cli
+SLOT=0
+_eclasses_=git-r3	27e13c09a4c7e4c78ac812f74727e676
+_md5_=578af36b51fe239f80ee9953a821a15d

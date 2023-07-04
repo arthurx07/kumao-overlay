@@ -1,0 +1,14 @@
+BDEPEND=>=dev-vcs/git-1.8.2.1[curl]
+DEFINED_PHASES=install unpack
+DEPEND=sys-libs/pam x11-libs/libxcb x11-base/xorg-server x11-apps/xauth sys-apps/util-linux sys-libs/ncurses
+DESCRIPTION=display manager with console UI
+EAPI=8
+HOMEPAGE=https://github.com/nullgemm/ly
+INHERIT=git-r3
+IUSE=+openrc runit systemd
+LICENSE=WTFPL-2
+PROPERTIES=live
+RDEPEND=sys-libs/pam x11-libs/libxcb x11-base/xorg-server x11-apps/xauth sys-apps/util-linux sys-libs/ncurses openrc? ( sys-apps/openrc ) runit? ( sys-process/runit ) systemd? ( sys-apps/systemd )
+SLOT=0
+_eclasses_=git-r3	27e13c09a4c7e4c78ac812f74727e676
+_md5_=293accf2fc1d22e857b7a365af88b79c

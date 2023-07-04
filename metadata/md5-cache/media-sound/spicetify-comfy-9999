@@ -1,0 +1,13 @@
+BDEPEND=>=dev-vcs/git-1.8.2.1[curl]
+DEFINED_PHASES=install unpack
+DEPEND=media-sound/spicetify-cli
+DESCRIPTION=Stay comfy while listening to music
+EAPI=8
+HOMEPAGE=https://github.com/Comfy-Themes/Spicetify
+INHERIT=git-r3
+LICENSE=WTFPL-2
+PROPERTIES=live
+RDEPEND=media-sound/spicetify-cli
+SLOT=0
+_eclasses_=git-r3	27e13c09a4c7e4c78ac812f74727e676
+_md5_=24334a236c5aaf188f7e674b36ee5939

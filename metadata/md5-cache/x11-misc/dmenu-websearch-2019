@@ -1,0 +1,11 @@
+DEFINED_PHASES=install unpack
+DEPEND=x11-misc/dmenu x11-misc/xdotool sys-apps/util-linux x11-apps/xprop x11-apps/setxkbmap sys-apps/coreutils net-misc/curl sys-apps/sed
+DESCRIPTION=A browser-independent address bar with bookmark support
+EAPI=8
+HOMEPAGE=https://efe.kim/files/scripts/dmenu_websearch
+KEYWORDS=amd64
+LICENSE=CC0-1.0
+RDEPEND=x11-misc/dmenu x11-misc/xdotool sys-apps/util-linux x11-apps/xprop x11-apps/setxkbmap sys-apps/coreutils net-misc/curl sys-apps/sed
+SLOT=0
+SRC_URI=https://efe.kim/files/scripts/dmenu_websearch -> dmenu-websearch.sh
+_md5_=9365625e29a6d20359e5373593e8c842

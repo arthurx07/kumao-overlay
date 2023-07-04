@@ -1,0 +1,14 @@
+BDEPEND=app-arch/rpm2targz
+DEFINED_PHASES=install postinst unpack
+DEPEND=net-print/cups scanner? ( media-gfx/brscan4 media-gfx/brscan-skey )
+DESCRIPTION=Driver for the Brother DCP-J562DW wifi multifunctional printer
+EAPI=8
+HOMEPAGE=https://www.brother.es/
+INHERIT=rpm
+IUSE=+scanner
+KEYWORDS=~amd64
+RDEPEND=net-print/cups scanner? ( media-gfx/brscan4 media-gfx/brscan-skey )
+SLOT=0
+SRC_URI=https://download.brother.com/welcome/dlf102102/dcpj562dwcupswrapper-1.0.0-0.i386.rpm https://download.brother.com/welcome/dlf102101/dcpj562dwlpr-1.0.0-0.i386.rpm
+_eclasses_=estack	c61c368a76fdf3a82fdf8dbaebea3804	rpm	745ef34afb8c31915d9d42a6aca23a35
+_md5_=8cfe1d8966d3f340f0502f1e924c30a0

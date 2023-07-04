@@ -1,0 +1,12 @@
+BDEPEND=>=dev-vcs/git-1.8.2.1[curl]
+DEFINED_PHASES=install unpack
+DEPEND=x11-misc/dmenu sys-apps/sed sys-apps/gawk sys-apps/grep
+DESCRIPTION=dmenu interface to add/remove todos in a simple text file
+EAPI=8
+HOMEPAGE=https://github.com/aliceh75/todo-dmenu
+INHERIT=git-r3
+PROPERTIES=live
+RDEPEND=x11-misc/dmenu sys-apps/sed sys-apps/gawk sys-apps/grep
+SLOT=0
+_eclasses_=git-r3	27e13c09a4c7e4c78ac812f74727e676
+_md5_=a183fa8025c75384b9ea377deb469889
