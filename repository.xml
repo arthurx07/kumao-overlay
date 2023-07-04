@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+
+<repostories version="1.0">
+  <repo priority="50" quality="experimental" status="unofficial">
+    <name>kumao-overlay</name>
+    <description>kumao's Gentoo overlay.</description>
+  </repo>
+</repostories>
