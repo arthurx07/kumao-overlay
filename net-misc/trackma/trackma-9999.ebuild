@@ -6,7 +6,7 @@ EAPI=8
 DISTUTILS_USE_PEP517=poetry
 PYTHON_COMPAT=( python3_{4..12} )
 
-inherit git-r3 distutils-r1 desktop
+inherit git-r3 distutils-r1 desktop optfeature
 
 DESCRIPTION="Open multi-site list manager for Unix-like systems."
 HOMEPAGE="https://github.com/z411/trackma"
@@ -63,5 +63,6 @@ python_install_all() {
 }
 
 pkg_postinst() {
-	elog "For more features copy trackma/hooks into your $XDG_CONFIG_HOME/trackma/hooks. Optionally install dev-python/pypresence for discord rich presence."
+	elog "For more features copy trackma/hooks into your ${XDG_CONFIG_HOME}/trackma/hooks"
+	optfeature "Discord rich presence support" dev-python/pypresence
 }
