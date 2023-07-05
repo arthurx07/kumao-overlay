@@ -32,12 +32,12 @@ Based on [Standard git workflow](https://wiki.gentoo.org/wiki/Standard_git_workf
 
 **Preparing a working directory**
 ```shell
-emerge --ask dev-util/pkgcheck dev-util/pkgdev
+emerge --ask dev-util/pkgcheck dev-util/pkgdev # [run as root]
 git clone git@github.com:arthurx07/kumao-overlay.git # git pull --rebase origin main
 ```
 **Bumping foo-category/bar**
 ```shell
-cd kumao-overlay/foo-category/bar # enter the directory of the ebuild # [run as root]
+cd kumao-overlay/foo-category/bar # enter the directory of the ebuild
 # edit the ebuild; when updating a package read the upstream release notes!
 pkgdev manifest # generate a new Manifest
 pkgcheck scan # check for QA issues during the work/change process.
