@@ -39,6 +39,6 @@ src_install() {
 	insinto "/opt/${PN}"
 	doins -r data/ lib/ AppFlowy
 
-	fperms u+x /opt/${PN}/AppFlowy
+	fperms +x /opt/${PN}/AppFlowy
 	dosym  "${EPREFIX}/opt/${PN}/AppFlowy"  "${EPREFIX}/usr/bin/appflowy"
 }
