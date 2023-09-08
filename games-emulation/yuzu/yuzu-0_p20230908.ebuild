@@ -86,7 +86,8 @@ src_unpack() {
 	mv "${WORKDIR}"/dynarmic*/* "${S}/externals/dynarmic" || die
 	mv "${WORKDIR}"/sirit*/* "${S}/externals/sirit" || die
 	mv "${WORKDIR}"/xbyak*/* "${S}/externals/xbyak" || die
-	mv "${WORKDIR}"/nx_tzdb*/* "${S}/externals/nx_tzdb" || die
+	mkdir -p "${S}/externals/nx_tzdb" || die
+	cp "${DISTDIR}"/"${PN}-nx_tzdb-${PV}.zip" "${S}/externals/nx_tzdb/" || die
 	if use discord; then
 		mv "${WORKDIR}"/discord*/* "${S}/externals/discord-rpc" || die
 	fi
