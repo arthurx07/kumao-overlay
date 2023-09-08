@@ -60,7 +60,7 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	dev-cpp/cpp-httplib
 	dev-cpp/cpp-jwt
-	system-vulkan? ( >=dev-util/vulkan-headers-1.3.243 )
+	system-vulkan? ( >=dev-util/vulkan-headers-1.3.256 )
 "
 BDEPEND="
 	>=dev-cpp/nlohmann_json-3.8.0
