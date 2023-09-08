@@ -24,6 +24,7 @@ src_compile() {
 src_install() {
 	insinto usr/share/${PN}/
 	doins -r {CustomApps,Extensions,Themes,jsHelper,css-map.json,globals.d.ts,spicetify}
+	fperms 755 usr/share/${PN}/spicetify
 	dodoc README.md
 
 	dosym usr/share/${PN}/spicetify usr/bin/spicetify
