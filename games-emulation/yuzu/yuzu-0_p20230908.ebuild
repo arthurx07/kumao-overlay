@@ -15,6 +15,7 @@ SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${YUZU_HASH}.tar.gz
 	https://github.com/herumi/xbyak/archive/refs/tags/v6.73.tar.gz
 		-> ${PN}-xbyak-${PV}.tar.gz
 	https://github.com/yuzu-emu/sirit/archive/4ab79a8c023aa63caaa93848b09b9fe8b183b1a9.tar.gz -> ${PN}-sirit-${PV}.tar.gz
+	https://github.com/lat9nq/tzdb_to_nx/releases/download/220816/220816.zip -> {$PN}-nx_tzdb-${PV}.zip
 	discord? (
 		https://github.com/yuzu-emu/discord-rpc/archive/20cc99aeffa08a4834f156b6ab49ed68618cf94a.tar.gz
 		-> ${PN}-discord-${PV}.tar.gz
@@ -85,6 +86,7 @@ src_unpack() {
 	mv "${WORKDIR}"/dynarmic*/* "${S}/externals/dynarmic" || die
 	mv "${WORKDIR}"/sirit*/* "${S}/externals/sirit" || die
 	mv "${WORKDIR}"/xbyak*/* "${S}/externals/xbyak" || die
+	mv "${WORKDIR}"/nx_tzdb*/* "${S}/externals/nx_tzdb" || die
 	if use discord; then
 		mv "${WORKDIR}"/discord*/* "${S}/externals/discord-rpc" || die
 	fi
