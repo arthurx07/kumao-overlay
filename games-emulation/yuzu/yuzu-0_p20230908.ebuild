@@ -29,9 +29,12 @@ IUSE="+cubeb discord +qt5 sdl +system-vulkan webengine webservice"
 RDEPEND="
 	<net-libs/mbedtls-3.1[cmac]
 	>=app-arch/zstd-1.5
+	app-arch/unzip
 	>=dev-libs/inih-52
 	>=dev-libs/libfmt-9.1.0:=
 	>=dev-libs/openssl-1.1:=
+	dev-libs/libzip
+	dev-util/spirv-headers
 	>=media-video/ffmpeg-4.3:=
 	>=net-libs/enet-1.3
 	app-arch/lz4:=
@@ -46,6 +49,9 @@ RDEPEND="
 		>=dev-qt/qtgui-5.15:5
 		>=dev-qt/qtmultimedia-5.15:5
 		>=dev-qt/qtwidgets-5.15:5
+	)
+	webengine? (
+		dev-qt/qtwebengine
 	)
 	sdl? (
 		>=media-libs/libsdl2-2.0.18
