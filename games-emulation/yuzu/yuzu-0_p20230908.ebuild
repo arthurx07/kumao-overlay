@@ -69,7 +69,7 @@ BDEPEND="
 	discord? ( >=dev-libs/rapidjson-1.1.0 )
 "
 S="${WORKDIR}"/yuzu-mainline-${YUZU_HASH}
-PATCHES=( "${FILESDIR}/${P}.patch" )
+# PATCHES=( "${FILESDIR}/${P}.patch" )
 
 REQUIRED_USE="|| ( qt5 sdl )"
 
