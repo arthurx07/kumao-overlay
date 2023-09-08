@@ -1,0 +1,182 @@
+diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
+index 82a6da9fd..29634fbc1 100644
+--- a/externals/CMakeLists.txt
++++ b/externals/CMakeLists.txt
+@@ -34,20 +34,6 @@ endif()
+ # Glad
+ add_subdirectory(glad)
+ 
+-# inih
+-if (NOT TARGET inih::INIReader)
+-    add_subdirectory(inih)
+-endif()
+-
+-# mbedtls
+-add_subdirectory(mbedtls)
+-target_include_directories(mbedtls PUBLIC ./mbedtls/include)
+-if (NOT MSVC)
+-    target_compile_options(mbedcrypto PRIVATE
+-        -Wno-unused-but-set-variable
+-        -Wno-string-concatenation)
+-endif()
+-
+ # MicroProfile
+ add_library(microprofile INTERFACE)
+ target_include_directories(microprofile INTERFACE ./microprofile)
+@@ -86,27 +72,6 @@ if (YUZU_USE_EXTERNAL_SDL2)
+     add_subdirectory(SDL)
+ endif()
+ 
+-# ENet
+-if (NOT TARGET enet::enet)
+-    add_subdirectory(enet)
+-    target_include_directories(enet INTERFACE ./enet/include)
+-    add_library(enet::enet ALIAS enet)
+-endif()
+-
+-# Cubeb
+-if (ENABLE_CUBEB AND NOT TARGET cubeb::cubeb)
+-    set(BUILD_TESTS OFF)
+-    set(BUILD_TOOLS OFF)
+-    add_subdirectory(cubeb)
+-    add_library(cubeb::cubeb ALIAS cubeb)
+-    if (NOT MSVC)
+-        if (TARGET speex)
+-            target_compile_options(speex PRIVATE -Wno-sign-compare)
+-        endif()
+-        target_compile_options(cubeb PRIVATE -Wno-implicit-const-int-float-conversion)
+-    endif()
+-endif()
+-
+ # DiscordRPC
+ if (USE_DISCORD_PRESENCE AND NOT TARGET DiscordRPC::discord-rpc)
+     set(BUILD_EXAMPLES OFF)
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index d7f68618c..64257fb0f 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -112,12 +112,6 @@ else()
+     add_compile_options(
+         -fwrapv
+ 
+-        -Werror=all
+-        -Werror=extra
+-        -Werror=missing-declarations
+-        -Werror=shadow
+-        -Werror=unused
+-
+         -Wno-attributes
+         -Wno-invalid-offsetof
+         -Wno-unused-parameter
+diff --git a/src/common/CMakeLists.txt b/src/common/CMakeLists.txt
+index 6d2badf76..f841ff5b0 100644
+--- a/src/common/CMakeLists.txt
++++ b/src/common/CMakeLists.txt
+@@ -211,7 +211,7 @@ endif()
+ create_target_directory_groups(common)
+ 
+ target_link_libraries(common PUBLIC Boost::context Boost::headers fmt::fmt microprofile Threads::Threads)
+-target_link_libraries(common PRIVATE lz4::lz4 zstd::zstd LLVM::Demangle)
++target_link_libraries(common PRIVATE lz4 zstd::zstd LLVM::Demangle)
+ 
+ if (ANDROID)
+     # For ASharedMemory_create
+diff --git a/src/common/scm_rev.cpp.in b/src/common/scm_rev.cpp.in
+index f0c124d69..4eb052886 100644
+--- a/src/common/scm_rev.cpp.in
++++ b/src/common/scm_rev.cpp.in
+@@ -3,9 +3,9 @@
+ 
+ #include "common/scm_rev.h"
+ 
+-#define GIT_REV      "@GIT_REV@"
+-#define GIT_BRANCH   "@GIT_BRANCH@"
+-#define GIT_DESC     "@GIT_DESC@"
++#define GIT_REV      "48808db"
++#define GIT_BRANCH   "master"
++#define GIT_DESC     "48808db"
+ #define BUILD_NAME   "@REPO_NAME@"
+ #define BUILD_DATE   "@BUILD_DATE@"
+ #define BUILD_FULLNAME "@BUILD_FULLNAME@"
+diff --git a/src/core/CMakeLists.txt b/src/core/CMakeLists.txt
+index 012648d69..c93908e45 100644
+--- a/src/core/CMakeLists.txt
++++ b/src/core/CMakeLists.txt
+@@ -877,7 +877,7 @@ endif()
+ create_target_directory_groups(core)
+ 
+ target_link_libraries(core PUBLIC common PRIVATE audio_core network video_core nx_tzdb)
+-target_link_libraries(core PUBLIC Boost::headers PRIVATE fmt::fmt nlohmann_json::nlohmann_json mbedtls Opus::opus)
++target_link_libraries(core PUBLIC Boost::headers PRIVATE fmt::fmt nlohmann_json::nlohmann_json mbedtls mbedcrypto mbedx509 Opus::opus)
+ if (MINGW)
+     target_link_libraries(core PRIVATE ${MSWSOCK_LIBRARY})
+ endif()
+diff --git a/src/dedicated_room/CMakeLists.txt b/src/dedicated_room/CMakeLists.txt
+index 136109a0c..6a6924ca0 100644
+--- a/src/dedicated_room/CMakeLists.txt
++++ b/src/dedicated_room/CMakeLists.txt
+@@ -15,7 +15,7 @@ if (ENABLE_WEB_SERVICE)
+     target_link_libraries(yuzu-room PRIVATE web_service)
+ endif()
+ 
+-target_link_libraries(yuzu-room PRIVATE mbedtls mbedcrypto)
++target_link_libraries(yuzu-room PRIVATE mbedtls mbedcrypto mbedx509 mbedcrypto)
+ if (MSVC)
+     target_link_libraries(yuzu-room PRIVATE getopt)
+ endif()
+diff --git a/src/network/network.cpp b/src/network/network.cpp
+index 6652a186b..6ec5423de 100644
+--- a/src/network/network.cpp
++++ b/src/network/network.cpp
+@@ -3,7 +3,7 @@
+ 
+ #include "common/assert.h"
+ #include "common/logging/log.h"
+-#include "enet/enet.h"
++#include "<enet/enet.h>"
+ #include "network/network.h"
+ 
+ namespace Network {
+diff --git a/src/video_core/vulkan_common/vulkan_wrapper.cpp b/src/video_core/vulkan_common/vulkan_wrapper.cpp
+index c3f388d89..8e0922b10 100644
+--- a/src/video_core/vulkan_common/vulkan_wrapper.cpp
++++ b/src/video_core/vulkan_common/vulkan_wrapper.cpp
+@@ -340,18 +340,6 @@ const char* ToString(VkResult result) noexcept {
+         return "VK_ERROR_VALIDATION_FAILED_EXT";
+     case VkResult::VK_ERROR_INVALID_SHADER_NV:
+         return "VK_ERROR_INVALID_SHADER_NV";
+-    case VkResult::VK_ERROR_IMAGE_USAGE_NOT_SUPPORTED_KHR:
+-        return "VK_ERROR_IMAGE_USAGE_NOT_SUPPORTED_KHR";
+-    case VkResult::VK_ERROR_VIDEO_PICTURE_LAYOUT_NOT_SUPPORTED_KHR:
+-        return "VK_ERROR_VIDEO_PICTURE_LAYOUT_NOT_SUPPORTED_KHR";
+-    case VkResult::VK_ERROR_VIDEO_PROFILE_OPERATION_NOT_SUPPORTED_KHR:
+-        return "VK_ERROR_VIDEO_PROFILE_OPERATION_NOT_SUPPORTED_KHR";
+-    case VkResult::VK_ERROR_VIDEO_PROFILE_FORMAT_NOT_SUPPORTED_KHR:
+-        return "VK_ERROR_VIDEO_PROFILE_FORMAT_NOT_SUPPORTED_KHR";
+-    case VkResult::VK_ERROR_VIDEO_PROFILE_CODEC_NOT_SUPPORTED_KHR:
+-        return "VK_ERROR_VIDEO_PROFILE_CODEC_NOT_SUPPORTED_KHR";
+-    case VkResult::VK_ERROR_VIDEO_STD_VERSION_NOT_SUPPORTED_KHR:
+-        return "VK_ERROR_VIDEO_STD_VERSION_NOT_SUPPORTED_KHR";
+     case VkResult::VK_ERROR_INVALID_DRM_FORMAT_MODIFIER_PLANE_LAYOUT_EXT:
+         return "VK_ERROR_INVALID_DRM_FORMAT_MODIFIER_PLANE_LAYOUT_EXT";
+     case VkResult::VK_ERROR_FRAGMENTATION_EXT:
+@@ -378,8 +366,6 @@ const char* ToString(VkResult result) noexcept {
+         return "VK_RESULT_MAX_ENUM";
+     case VkResult::VK_ERROR_COMPRESSION_EXHAUSTED_EXT:
+         return "VK_ERROR_COMPRESSION_EXHAUSTED_EXT";
+-    case VkResult::VK_ERROR_INCOMPATIBLE_SHADER_BINARY_EXT:
+-        return "VK_ERROR_INCOMPATIBLE_SHADER_BINARY_EXT";
+     }
+     return "Unknown";
+ }
+diff --git a/src/yuzu_cmd/CMakeLists.txt b/src/yuzu_cmd/CMakeLists.txt
+index 46eddf423..afbe9fff7 100644
+--- a/src/yuzu_cmd/CMakeLists.txt
++++ b/src/yuzu_cmd/CMakeLists.txt
+@@ -1,4 +1,6 @@
+ # SPDX-FileCopyrightText: 2018 yuzu Emulator Project
++find_package(PkgConfig REQUIRED)
++pkg_check_modules(INIH REQUIRED INIReader)
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ # Credits to Samantas5855 and others for this function.
