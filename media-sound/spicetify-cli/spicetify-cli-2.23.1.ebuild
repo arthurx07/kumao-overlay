@@ -27,7 +27,7 @@ src_install() {
 	fperms 755 usr/share/${PN}/spicetify
 	dodoc README.md
 
-	dosym usr/share/${PN}/spicetify usr/bin/spicetify
+	dosym "${EPREFIX}"/usr/share/${PN}/spicetify "${EPREFIX}"/usr/bin/spicetify
 }
 
 pkg_postinst() {
