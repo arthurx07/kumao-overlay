@@ -5,67 +5,68 @@ EAPI=8
 
 inherit cmake xdg
 MY_PV="mainline-${PV/./-}"
-CPP_JWT_SHA="e12ef06218596b52d9b5d6e1639484866a8e7067"
 MBEDTLS_SHA="8c88150ca139e06aa2aae8349df8292a88148ea1"
-_DYNARMIC_SHA="7da378033a7764f955516f75194856d87bbcd7a5"
-SIRIT_SHA="ab75463999f4f3291976b079d42d52ee91eebf3f"
+_DYNARMIC_SHA="96e179465884be74987d5847d6741cdabdfe1b48" # "dyn" is a reserved prefix
+SIRIT_SHA="4ab79a8c023aa63caaa93848b09b9fe8b183b1a9"
 NX_TZDB_VERSION="220816"
-CPP_HTTPLIB_SHA="6d963fbe8d415399d65e94db7910bbd22fe3741c"
+CPP_HTTPLIB_SHA="30b7732565c4630263b43c34267a605a1511f794"
+# CPP_JWT_SHA="10ef5735d842b31025f1257ae78899f50a40fb14"
 # SDL_SHA="031912c4b6c5db80b443f04aa56fec3e4e645153"
 
 DESCRIPTION="Nintendo Switch emulator"
 HOMEPAGE="https://yuzu-emu.org/ https://github.com/yuzu-emu/yuzu-mainline"
 SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
-	https://github.com/arun11299/cpp-jwt/archive/${CPP_JWT_SHA}.tar.gz -> ${PN}-cpp-jwt-${CPP_JWT_SHA:0:7}.tar.gz
 	https://github.com/yuzu-emu/mbedtls/archive/${MBEDTLS_SHA}.tar.gz -> ${PN}-mbedtls-${MBEDTLS_SHA:0:7}.tar.gz
 	https://github.com/MerryMage/dynarmic/archive/${_DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${_DYNARMIC_SHA:0:7}.tar.gz
 	https://github.com/yuzu-emu/sirit/archive/${SIRIT_SHA}.tar.gz -> ${PN}-sirit-${SIRIT_SHA:0:7}.tar.gz
-	https://github.com/lat9nq/tzdb_to_nx/releases/download/${NX_TZDB_VERSION}/${NX_TZDB_VERSION}.zip -> ${PN}-nx_tzdb-${NX_TZDB_VERSION}.zip
-	https://github.com/yhirose/cpp-httplib/archive/${CPP_HTTPLIB_SHA}.tar.gz -> ${PN}-cpp-httplib-${CPP_HTTPLIB_SHA:0:7}.tar.gz" # required for cpp-httplib CMakeLists.txt
+	https://github.com/lat9nq/tzdb_to_nx/releases/download/${NX_TZDB_VERSION}/${NX_TZDB_VERSION}.zip \
+		-> ${PN}-nx_tzdb-${NX_TZDB_VERSION}.zip
+	https://github.com/yhirose/cpp-httplib/archive/${CPP_HTTPLIB_SHA}.tar.gz \
+		-> ${PN}-cpp-httplib-${CPP_HTTPLIB_SHA:0:7}.tar.gz" # required for cpp-httplib CMakeLists.txt
+	# https://github.com/arun11299/cpp-jwt/archive/${CPP_JWT_SHA}.tar.gz -> ${PN}-cpp-jwt-${CPP_JWT_SHA:0:7}.tar.gz
 	# https://github.com/libsdl-org/SDL/archive/${SDL_SHA}.tar.gz -> ${PN}-sdl-${SDL_SHA:0:7}.tar.gz
 
 LICENSE="BSD GPL-2 GPL-2+ LGPL-2.1" # || ( Apache-2.0 GPL-2+) 0BSD GPL-2+ ISC MIT
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="compatibility-reporting webservice +cubeb +qt5 sdl webengine vaapi"
+IUSE="compatibility-reporting +webservice +cubeb +qt5 sdl webengine vaapi"
 REQUIRED_USE="|| ( qt5 sdl ) compatibility-reporting? ( webservice ) "
 
 DEPEND="
-	>=dev-libs/xbyak-6.03
-	dev-libs/vulkan-memory-allocator
+	>=dev-libs/xbyak-6
+	dev-libs/vulkan-memory-allocator:=
 	>=app-arch/zstd-1.5.0
 	>=dev-libs/inih-52
-	>=dev-libs/libfmt-9.1.0:=
-	>=dev-libs/openssl-1.1:=
-	dev-libs/libzip
+	>=dev-libs/libfmt-9:=
+	>=dev-libs/openssl-1.1.1:=
 	>=media-video/ffmpeg-4.3:=
 	>=net-libs/enet-1.3:=
 	app-arch/lz4:=
-	dev-libs/boost:=[context]
-	media-libs/opus
-	sys-libs/zlib
-	virtual/libusb:=
+	>=dev-libs/boost-1.79.0:=[context]
+	>=media-libs/opus-1.3
+	>=sys-libs/zlib-1.2
+	virtual/libusb:1
 	cubeb? ( media-libs/cubeb )
 	qt5? (
-		dev-qt/qtcore:5
-		dev-qt/qtgui:5
-		dev-qt/qtmultimedia:5
-		dev-qt/qtwidgets:5
+		>=dev-qt/qtcore-5.15
+		>=dev-qt/qtgui-5.15
+		>=dev-qt/qtmultimedia-5.15
+		>=dev-qt/qtwidgets-5.15
 	)
-	webengine? ( dev-qt/qtwebengine )
-	webservice? ( dev-cpp/cpp-httplib )
+	webengine? ( >=dev-qt/qtwebengine-5.15 )
+	webservice? ( >=dev-cpp/cpp-httplib-0.12 >=dev-cpp/cpp-jwt-1.4 )
 	vaapi? ( media-libs/libva )
-	sdl? ( media-libs/libsdl2 )
-"
+	sdl? ( >=media-libs/libsdl2-2.26.4 )
+" # dev-libs/libzip (?)
 RDEPEND="${DEPEND}
-	media-libs/vulkan-loader
+	>=media-libs/vulkan-loader-1.3.256
 "
 BDEPEND="
 	app-arch/unzip
 	>=dev-cpp/nlohmann_json-3.8.0
 	dev-cpp/robin-map
 	dev-util/glslang
-	>=dev-util/vulkan-headers-1.3.246
+	>=dev-util/vulkan-headers-1.3.256
 	dev-util/spirv-headers
 "
 
@@ -82,14 +83,14 @@ pkg_setup() {
 
 src_prepare() {
 	rm .gitmodules || die
-	rmdir "${S}/externals/"{dynarmic,mbedtls,sirit,cpp-jwt,cpp-httplib,SDL} || die # ,cpp-httplib,SDL
+	rmdir "${S}/externals/"{dynarmic,mbedtls,sirit,cpp-jwt,cpp-httplib,SDL} || die # cpp-jwt,cpp-httplib,SDL
 	mv "${WORKDIR}/dynarmic-${_DYNARMIC_SHA}" "${S}/externals/dynarmic" || die
 	mv "${WORKDIR}/sirit-${SIRIT_SHA}" "${S}/externals/sirit" || die
-	mv "${WORKDIR}/cpp-jwt-${CPP_JWT_SHA}" "${S}/externals/cpp-jwt" || die
 	if use webservice; then
 		mv "${WORKDIR}/cpp-httplib-${CPP_HTTPLIB_SHA}" "${S}/externals/cpp-httplib" || die
 	fi
 	# mv "${WORKDIR}/SDL-${SDL_SHA}" "${S}/externals/SDL" || die
+	# mv "${WORKDIR}/cpp-jwt-${CPP_JWT_SHA}" "${S}/externals/cpp-jwt" || die
 	mv "${WORKDIR}/mbedtls-${MBEDTLS_SHA}" "${S}/externals/mbedtls" || die
 	mkdir -p "${S}_build/externals/nx_tzdb" || die
 	cp "${DISTDIR}/${PN}-nx_tzdb-${NX_TZDB_VERSION}.zip" \

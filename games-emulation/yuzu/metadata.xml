@@ -14,5 +14,6 @@
 		<flag name="system-vulkan">Use system dev-util/vulkan-headers</flag>
 		<flag name="webengine">Use QtWebEngine for web applet implementation</flag>
 		<flag name="webservice">Enables web services (telemetry, etc.)</flag>
+		<flag name="compatibility-reporting">Enable compatibility reporting to yuzu ('telemetry')</flag>
 	</use>
 </pkgmetadata>
