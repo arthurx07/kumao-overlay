@@ -7,7 +7,7 @@ inherit git-r3
 
 DESCRIPTION="Print selected pixel's color value in RGB."
 HOMEPAGE="https://github.com/Jack12816/colorpicker"
-EGIT_SRC_URI="https://github.com/Jack12816/colorpicker.git"
+EGIT_REPO_URI="https://github.com/Jack12816/colorpicker.git"
 
 LICENSE=""
 SLOT="0"
