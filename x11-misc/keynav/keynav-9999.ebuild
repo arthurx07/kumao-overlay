@@ -15,3 +15,7 @@ SLOT="0"
 DEPEND="x11-misc/xdotool x11-libs/libXinerama x11-base/xorg-server"
 RDEPEND="${DEPEND}"
 BDEPEND="dev-libs/glib"
+
+src_install() {
+	make PREFIX="${D}" install
+}
