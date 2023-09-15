@@ -14,3 +14,7 @@ SLOT="0"
 
 DEPEND="x11-libs/libXcomposite x11-libs/libX11 x11-libs/libXfixes gui-libs/gtk x11-libs/gdk-pixbuf"
 RDEPEND="${DEPEND}"
+
+src_install() {
+	dobin colorpicker
+}
