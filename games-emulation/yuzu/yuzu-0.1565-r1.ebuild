@@ -48,16 +48,16 @@ DEPEND="
 	virtual/libusb:1
 	cubeb? ( media-libs/cubeb )
 	qt5? (
-		>=dev-qt/qtcore-5.15
-		>=dev-qt/qtgui-5.15
-		>=dev-qt/qtmultimedia-5.15
-		>=dev-qt/qtwidgets-5.15
+		>=dev-qt/qtcore-5.10
+		>=dev-qt/qtgui-5.10
+		>=dev-qt/qtmultimedia-5.10
+		>=dev-qt/qtwidgets-5.10
 	)
 	webengine? ( >=dev-qt/qtwebengine-5.15 )
 	webservice? ( >=dev-cpp/cpp-httplib-0.12 >=dev-cpp/cpp-jwt-1.4 )
 	vaapi? ( media-libs/libva )
 	sdl? ( >=media-libs/libsdl2-2.26.4 )
-" # dev-libs/libzip (?)
+	" # dev-libs/libzip (?); qtmultimedia-5.10 in gentoo is equivalent to qtmultimedia-5.15 (qtwidgets too)
 RDEPEND="${DEPEND}
 	>=media-libs/vulkan-loader-1.3.256
 "
