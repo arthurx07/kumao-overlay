@@ -10,6 +10,7 @@ _DYNARMIC_SHA="96e179465884be74987d5847d6741cdabdfe1b48" # "dyn" is a reserved p
 SIRIT_SHA="4ab79a8c023aa63caaa93848b09b9fe8b183b1a9"
 NX_TZDB_VERSION="220816"
 CPP_HTTPLIB_SHA="f63ba7d013842bdeece3ed74cb3ab03552abf1ba"
+DISCORD_RPC_SHA="20cc99aeffa08a4834f156b6ab49ed68618cf94a"
 # CPP_JWT_SHA="10ef5735d842b31025f1257ae78899f50a40fb14"
 # SDL_SHA="031912c4b6c5db80b443f04aa56fec3e4e645153"
 
@@ -21,6 +22,8 @@ SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${
 	https://github.com/yuzu-emu/sirit/archive/${SIRIT_SHA}.tar.gz -> ${PN}-sirit-${SIRIT_SHA:0:7}.tar.gz
 	https://github.com/lat9nq/tzdb_to_nx/releases/download/${NX_TZDB_VERSION}/${NX_TZDB_VERSION}.zip \
 		-> ${PN}-nx_tzdb-${NX_TZDB_VERSION}.zip
+	https://github.com/yuzu-emu/discord-rpc/archive/${DISCORD_RPC_SHA}.tar.gz \
+		-> ${PN}-discord-rrpc-${DISCORD_RPC_SHA}.tar.gz
 	https://github.com/yhirose/cpp-httplib/archive/${CPP_HTTPLIB_SHA}.tar.gz \
 		-> ${PN}-cpp-httplib-${CPP_HTTPLIB_SHA:0:7}.tar.gz" # required for cpp-httplib CMakeLists.txt
 	# https://github.com/arun11299/cpp-jwt/archive/${CPP_JWT_SHA}.tar.gz -> ${PN}-cpp-jwt-${CPP_JWT_SHA:0:7}.tar.gz
@@ -29,7 +32,7 @@ SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${
 LICENSE="BSD GPL-2 GPL-2+ LGPL-2.1" # || ( Apache-2.0 GPL-2+) 0BSD GPL-2+ ISC MIT
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="compatibility-reporting +webservice +cubeb +qt5 sdl webengine vaapi"
+IUSE="compatibility-reporting +webservice +cubeb +qt5 sdl webengine vaapi +discord"
 REQUIRED_USE="|| ( qt5 sdl ) compatibility-reporting? ( webservice ) "
 
 DEPEND="
@@ -89,6 +92,9 @@ src_prepare() {
 	if use webservice; then
 		mv "${WORKDIR}/cpp-httplib-${CPP_HTTPLIB_SHA}" "${S}/externals/cpp-httplib" || die
 	fi
+	if use discord; then
+		mv "${WORKDIR}/discord-rpc-${DISCORD_RPC_SHA}" "${S}/externals/discord-rpc"
+	fi
 	# mv "${WORKDIR}/SDL-${SDL_SHA}" "${S}/externals/SDL" || die
 	# mv "${WORKDIR}/cpp-jwt-${CPP_JWT_SHA}" "${S}/externals/cpp-jwt" || die
 	mv "${WORKDIR}/mbedtls-${MBEDTLS_SHA}" "${S}/externals/mbedtls" || die
@@ -133,7 +139,7 @@ src_configure() {
 		-DGIT_DESC="${PV}"
 		-DGIT_REV="${PV}"
 		-DSIRIT_USE_SYSTEM_SPIRV_HEADERS=ON
-		-DUSE_DISCORD_PRESENCE=OFF
+		"-DUSE_DISCORD_PRESENCE=$(usex discord)"
 		-DYUZU_DOWNLOAD_TIME_ZONE_DATA=OFF
 		"-DYUZU_ENABLE_COMPATIBILITY_REPORTING=$(usex compatibility-reporting)"
 		-DYUZU_TESTS=OFF
