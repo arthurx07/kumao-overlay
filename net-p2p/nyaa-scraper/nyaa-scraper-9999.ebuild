@@ -24,6 +24,6 @@ src_compile() {
 
 src_install() {
 	dobin nyaa-scraper
-	dobin nyaa-rss
+	dobin nyaa-rss-show
 	dodoc LICENSE README.md
 }
