@@ -9,8 +9,9 @@ MBEDTLS_SHA="8c88150ca139e06aa2aae8349df8292a88148ea1"
 _DYNARMIC_SHA="9d1bc6ecc28ea7a7dde8af937ce3b328e1bbee98" # "dyn" is a reserved prefix
 SIRIT_SHA="4ab79a8c023aa63caaa93848b09b9fe8b183b1a9"
 NX_TZDB_VERSION="221202"
-CPP_HTTPLIB_SHA="7fc8682a0a3eb0530314495005067dce8148a1aa"
+CPP_HTTPLIB_SHA="7fc8682a0a3eb0530314495005067dce8148a1aa" # required for cpp-httplib CMakeLists.txt
 DISCORD_RPC_SHA="20cc99aeffa08a4834f156b6ab49ed68618cf94a"
+SIMPLEINI_SHA="9fa7622f41e36105a4c767a7765bb24afec4d6be" # required for simpleini CMakeLists.txt
 # CPP_JWT_SHA="10ef5735d842b31025f1257ae78899f50a40fb14"
 # SDL_SHA="031912c4b6c5db80b443f04aa56fec3e4e645153"
 
@@ -24,8 +25,10 @@ SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${
 		-> ${PN}-nx_tzdb-${NX_TZDB_VERSION}.zip
 	https://github.com/yuzu-emu/discord-rpc/archive/${DISCORD_RPC_SHA}.tar.gz \
 		-> ${PN}-discord-rrpc-${DISCORD_RPC_SHA}.tar.gz
+	https://github.com/brofield/simpleini/archive/${SIMPLEINI_SHA}.tar.gz \
+		-> ${PN}-simpleini-${SIMPLEINI_SHA}.tar.gz
 	https://github.com/yhirose/cpp-httplib/archive/${CPP_HTTPLIB_SHA}.tar.gz \
-		-> ${PN}-cpp-httplib-${CPP_HTTPLIB_SHA:0:7}.tar.gz" # required for cpp-httplib CMakeLists.txt
+		-> ${PN}-cpp-httplib-${CPP_HTTPLIB_SHA:0:7}.tar.gz"
 	# https://github.com/arun11299/cpp-jwt/archive/${CPP_JWT_SHA}.tar.gz -> ${PN}-cpp-jwt-${CPP_JWT_SHA:0:7}.tar.gz
 	# https://github.com/libsdl-org/SDL/archive/${SDL_SHA}.tar.gz -> ${PN}-sdl-${SDL_SHA:0:7}.tar.gz
 
@@ -86,7 +89,7 @@ pkg_setup() {
 
 src_prepare() {
 	rm .gitmodules || die
-	rmdir "${S}/externals/"{dynarmic,mbedtls,sirit,cpp-jwt,cpp-httplib,SDL,discord-rpc} || die # cpp-jwt,cpp-httplib,SDL
+	rmdir "${S}/externals/"{dynarmic,mbedtls,sirit,cpp-jwt,cpp-httplib,SDL,discord-rpc,simpleini} || die # cpp-jwt,cpp-httplib,SDL
 	mv "${WORKDIR}/dynarmic-${_DYNARMIC_SHA}" "${S}/externals/dynarmic" || die
 	mv "${WORKDIR}/sirit-${SIRIT_SHA}" "${S}/externals/sirit" || die
 	if use webservice; then
@@ -98,6 +101,7 @@ src_prepare() {
 	# mv "${WORKDIR}/SDL-${SDL_SHA}" "${S}/externals/SDL" || die
 	# mv "${WORKDIR}/cpp-jwt-${CPP_JWT_SHA}" "${S}/externals/cpp-jwt" || die
 	mv "${WORKDIR}/mbedtls-${MBEDTLS_SHA}" "${S}/externals/mbedtls" || die
+	mv "${WORKDIR}/simpleini-${SIMPLEINI_SHA}" "${S}/externals/simpleini" || die
 	mkdir -p "${S}_build/externals/nx_tzdb" || die
 	cp "${DISTDIR}/${PN}-nx_tzdb-${NX_TZDB_VERSION}.zip" \
 		"${S}_build/externals/nx_tzdb/${NX_TZDB_VERSION}.zip" || die
@@ -122,8 +126,7 @@ src_prepare() {
 		einfo 'Using fallback compatibility list'
 		gunzip < "${FILESDIR}/${PN}-fallback-compat.json.gz" > "${T}/compatibility_list.json" || die
 	fi
-	mv -f "${T}/compatibility_list.json" \
-		"${BUILD_DIR}/dist/compatibility_list/compatibility_list.json" || die
+	mv -f "${T}/compatibility_list.json" \ "${BUILD_DIR}/dist/compatibility_list/compatibility_list.json" || die
 }
 
 src_configure() {
