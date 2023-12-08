@@ -126,7 +126,7 @@ src_prepare() {
 		einfo 'Using fallback compatibility list'
 		gunzip < "${FILESDIR}/${PN}-fallback-compat.json.gz" > "${T}/compatibility_list.json" || die
 	fi
-	mv -f "${T}/compatibility_list.json" \ "${BUILD_DIR}/dist/compatibility_list/compatibility_list.json" || die
+	mv -f "${T}/compatibility_list.json" \ "${BUILD_DIR}/dist/compatibility_list/" || die
 }
 
 src_configure() {
