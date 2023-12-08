@@ -82,10 +82,10 @@ PATCHES=(
 	"${FILESDIR}/${PN}-6858-disable-collecttoolinginfo.patch"
 )
 
-pkg_setup() {
-	wget -t 1 --timeout=15 -O "${T}/compatibility_list.json" https://api.yuzu-emu.org/gamedb/ ||
-		rm -f "${T}/compatibility_list.json"
-}
+# pkg_setup() {
+# 	wget -t 1 --timeout=15 -O "${T}/compatibility_list.json" https://api.yuzu-emu.org/gamedb/ ||
+# 		rm -f "${T}/compatibility_list.json"
+# }
 
 src_prepare() {
 	rm .gitmodules || die
@@ -121,12 +121,12 @@ src_prepare() {
 
 	cmake_src_prepare
 
-	mkdir -p "${BUILD_DIR}/dist/compatibility_list" || die
-	if ! [ -f "${T}/compatibility_list.json" ]; then
-		einfo 'Using fallback compatibility list'
-		gunzip < "${FILESDIR}/${PN}-fallback-compat.json.gz" > "${T}/compatibility_list.json" || die
-	fi
-	mv -f "${T}/compatibility_list.json" \ "${BUILD_DIR}/dist/compatibility_list/" || die
+	# mkdir -p "${BUILD_DIR}/dist/compatibility_list" || die
+	# if ! [ -f "${T}/compatibility_list.json" ]; then
+	# 	einfo 'Using fallback compatibility list'
+	# 	gunzip < "${FILESDIR}/${PN}-fallback-compat.json.gz" > "${T}/compatibility_list.json" || die
+	# fi
+	# mv -f "${T}/compatibility_list.json" \ "${BUILD_DIR}/dist/compatibility_list/compatibility_list.json" || die # don't know why it fails
 }
 
 src_configure() {
