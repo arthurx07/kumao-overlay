@@ -17,5 +17,5 @@ RDEPEND="${DEPEND}"
 BDEPEND="dev-libs/glib"
 
 src_install() {
-	make PREFIX="${D}" install
+	make PREFIX="${D}/usr/" install
 }
