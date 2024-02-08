@@ -41,7 +41,7 @@ REQUIRED_USE="|| ( qt5 sdl ) compatibility-reporting? ( webservice ) "
 DEPEND="
 	>=dev-libs/xbyak-6.03:=
 	dev-libs/vulkan-memory-allocator:=
-	>=dev-libs/vulkan-utility-libraries-1.3.274:=
+	>=dev-util/vulkan-utility-libraries-1.3.274:=
 	>=app-arch/zstd-1.5.0
 	>=dev-libs/inih-52
 	>=dev-libs/libfmt-9.1.0:=
