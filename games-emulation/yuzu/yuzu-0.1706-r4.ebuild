@@ -9,7 +9,7 @@ CPP_HTTPLIB_SHA="a609330e4c6374f741d3b369269f7848255e1954" # required for cpp-ht
 DISCORD_RPC_SHA="20cc99aeffa08a4834f156b6ab49ed68618cf94a"
 _DYNARMIC_SHA="ca0e264f4f962e29baa23a3282ce484625866b98" # "dyn" is a reserved prefix
 MBEDTLS_SHA="8c88150ca139e06aa2aae8349df8292a88148ea1"
-NX_TZDB_SHA="404d39004570a26c734a9d1fa29ab4d63089c599" # don't know if it's really using this, or downloading directly from gh
+NX_TZDB_VERSION="221202"
 SIMPLEINI_SHA="382ddbb4b92c0b26aa1b32cefba2002119a5b1f2" # required for simpleini CMakeLists.txt
 SIRIT_SHA="ab75463999f4f3291976b079d42d52ee91eebf3f"
 # CPP_JWT_SHA="10ef5735d842b31025f1257ae78899f50a40fb14"
@@ -24,8 +24,8 @@ SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${
 		-> ${PN}-discord-rrpc-${DISCORD_RPC_SHA}.tar.gz
 	https://github.com/MerryMage/dynarmic/archive/${_DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${_DYNARMIC_SHA:0:7}.tar.gz
 	https://github.com/yuzu-emu/mbedtls/archive/${MBEDTLS_SHA}.tar.gz -> ${PN}-mbedtls-${MBEDTLS_SHA:0:7}.tar.gz
-	https://github.com/lat9nq/tzdb_to_nx/archive/${NX_TZDB_SHA}/${NX_TZDB_SHA}.tar.gz \
-		-> ${PN}-nx_tzdb-${NX_TZDB_SHA}.tar.gz
+	https://github.com/lat9nq/tzdb_to_nx/archive/${NX_TZDB_VERSION}/${NX_TZDB_VERSION}.zip \
+		-> ${PN}-nx_tzdb-${NX_TZDB_VERSION}.zip
 	https://github.com/brofield/simpleini/archive/${SIMPLEINI_SHA}.tar.gz \
 		-> ${PN}-simpleini-${SIMPLEINI_SHA}.tar.gz
 	https://github.com/yuzu-emu/sirit/archive/${SIRIT_SHA}.tar.gz -> ${PN}-sirit-${SIRIT_SHA:0:7}.tar.gz"
@@ -109,8 +109,8 @@ src_prepare() {
 	mv "${WORKDIR}/mbedtls-${MBEDTLS_SHA}" "${S}/externals/mbedtls" || die
 	mv "${WORKDIR}/simpleini-${SIMPLEINI_SHA}" "${S}/externals/simpleini" || die
 	mkdir -p "${S}_build/externals/nx_tzdb" || die
-	cp "${DISTDIR}/${PN}-nx_tzdb-${NX_TZDB_SHA}.tar.gz" \
-		"${S}_build/externals/nx_tzdb/${NX_TZDB_SHA}.tar.gz" || die
+	cp "${DISTDIR}/${PN}-nx_tzdb-${NX_TZDB_VERSION}.zip" \
+		"${S}_build/externals/nx_tzdb/${NX_TZDB_VERSION}.zip" || die
 
 	sed -e 's/find_package(Boost .*/find_package(Boost 1.71 COMPONENTS context REQUIRED)/' \
 		-i src/common/CMakeLists.txt || die
