@@ -52,7 +52,7 @@ DEPEND="
 	>=dev-libs/boost-1.79.0:=[context]
 	>=media-libs/opus-1.3
 	>=sys-libs/zlib-1.2
-	sys-libs/libunwind
+	( sys-libs/libunwind ) || ( sys-libs/llvm-libunwind )
 	virtual/libusb:=
 	cubeb? ( media-libs/cubeb )
 	qt5? (
