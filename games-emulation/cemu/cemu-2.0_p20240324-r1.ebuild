@@ -39,7 +39,8 @@ RDEPEND="app-arch/zarchive
 	vulkan? ( dev-util/vulkan-headers )
 	x11-libs/gtk+:3[wayland?]
 	x11-libs/libX11
-	x11-libs/wxGTK:3.2-gtk3[opengl]"
+	x11-libs/wxGTK:3.2-gtk3[opengl]
+	virtual/libusb"
 DEPEND="${RDEPEND}"
 BDEPEND="media-libs/glm"
 
@@ -73,6 +74,8 @@ src_configure() {
 		-DENABLE_WAYLAND=$(usex wayland)
 		-DPORTABLE=OFF
 		-DwxWidgets_CONFIG_EXECUTABLE=/usr/$(get_libdir)/wx/config/gtk3-unicode-3.2-gtk3
+		-DCMAKE_DISABLE_PRECOMPILE_HEADERS=OFF
+		-DALLOW_EXTERNAL_SPIRV_TOOLS=ON
 		-Wno-dev
 	)
 	cmake_src_configure
