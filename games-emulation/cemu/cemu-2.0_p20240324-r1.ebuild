@@ -74,9 +74,9 @@ src_configure() {
 		-DENABLE_WAYLAND=$(usex wayland)
 		-DPORTABLE=OFF
 		-DwxWidgets_CONFIG_EXECUTABLE=/usr/$(get_libdir)/wx/config/gtk3-unicode-3.2-gtk3
-		-DCMAKE_DISABLE_PRECOMPILE_HEADERS=OFF
+		-DCMAKE_DISABLE_PRECOMPILE_HEADERS=OFF # fix various declaration/etc errors
 		-DALLOW_EXTERNAL_SPIRV_TOOLS=ON
-		-Wno-dev
+		-Wno-dev # to supress a warning which always shows up
 	)
 	cmake_src_configure
 }
