@@ -1,8 +1,13 @@
 diff --git a/config.mk b/config.mk
-index 8c9d6d5..d6e8f78 100644
+index 8c9d6d5..205771f 100644
 --- a/config.mk
 +++ b/config.mk
-@@ -8,7 +8,7 @@ PREFIX = /usr/local
+@@ -4,11 +4,11 @@ VERSION = 0.6
+ # Customize below to fit your system
+ 
+ # paths
+-PREFIX = /usr/local
++PREFIX = /usr
  MANPREFIX = ${PREFIX}/share/man
  
  INCS = -I. -I/usr/include

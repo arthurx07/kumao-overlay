@@ -11,4 +11,4 @@ EGIT_REPO_URI="https://github.com/pickfire/spt.git"
 LICENSE="ISC"
 SLOT="0"
 
-PATCHES=("${FILESDIR}/${P}-lib64.diff")
+PATCHES=("${FILESDIR}/${P}-prefix-lib64.diff")
